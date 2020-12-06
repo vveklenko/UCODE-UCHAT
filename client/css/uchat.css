@@ -1,3 +1,5 @@
+@import url("registration_menu.css");
+
 * {
     font-family: "New Century Schoolbook", Times, serif;
     font-style: normal;
@@ -29,25 +31,6 @@
    background-color: rgba(31, 31, 31, 0.6);
 }
 
-/* ============================== */
-#back_black {
-    background-color: rgba(31, 31, 31, 1);
- }
-
- #registration_menu_form {
-    padding: 5px;
-    background: #1f1f1f;
-    box-shadow: 0px 0px 5px 2px #e1e1e1;
-    border-radius: 15px;
-    animation-name: fade;
-    animation-duration: .2s;
-}
-
-#Login {
-    font-size: 24px;
-    color: #e1e1e1;
-    margin-top: 20px;
-}
 
 /* ============================== */
 
