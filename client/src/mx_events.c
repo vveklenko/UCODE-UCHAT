@@ -246,4 +246,41 @@ void close_image_click_event(GtkWidget *widget, GdkEventButton *event) {
     }
     if (widget) {}
 }
+//Registration menu
 //========================================================
+void data_change_event(GtkWidget *widget, GdkEvent *event) {
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 0) {
+        gtk_widget_set_opacity(GTK_WIDGET(login_btn), 1.0);
+    }
+    else {
+         gtk_widget_set_opacity(GTK_WIDGET(login_btn), 0.5);
+    }
+
+    if (event) {}
+    if (widget) {}
+}
+
+void btn_enter_notify_event() {
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 0) {
+        gtk_widget_set_state_flags(GTK_WIDGET(login_btn), GTK_STATE_FLAG_PRELIGHT, TRUE);
+    }
+}
+
+void btn_leave_notify_event() {
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 0) {
+        gtk_widget_unset_state_flags(GTK_WIDGET(login_btn), GTK_STATE_FLAG_PRELIGHT);
+    }
+}
+
+
+void registration_label_enter_notify_event(GtkWidget *widget, GdkEvent *event, GtkWidget *data) {
+    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
+    if (data) {}
+    if (event) {}
+}
+
+void registration_label_leave_notify_event(GtkWidget *widget, GdkEvent *event, GtkWidget *data) {
+    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
+        if (data) {}
+    if (event) {}
+}

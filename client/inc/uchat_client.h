@@ -84,8 +84,18 @@ GtkWidget *edit_user_form;
 //registration menu
 GtkWidget *back_black;
 GtkWidget *registration_menu;
+GtkWidget *log_in_menu;
+GtkWidget *login;
+GtkWidget *password; 
+GtkWidget *login_btn;
 
 void mx_registration_menu();
+void registration_label_enter_notify_event(GtkWidget *widget, GdkEvent *event, GtkWidget *data);
+void registration_label_leave_notify_event(GtkWidget *widget, GdkEvent *event, GtkWidget *data);
+
+void data_change_event(GtkWidget *widget, GdkEvent *event);
+void btn_enter_notify_event();
+void btn_leave_notify_event();
 
 //////////////////////////////
 
