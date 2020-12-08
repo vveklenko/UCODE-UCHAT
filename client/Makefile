@@ -12,7 +12,7 @@ all: install
 install: uchat
 
 uchat:
-	@clang -std=c11 $(WFLGS) $(GTK_INC_FLAGS) $(SRCS) $(HDRS) $(GTK_LINK_FLAGS)
+	@clang $(WFLGS) $(GTK_INC_FLAGS) $(SRCS) $(HDRS) $(GTK_LINK_FLAGS)
 	@mv a.out ../$@
 
 clean:

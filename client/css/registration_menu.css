@@ -46,11 +46,25 @@
 }
 
 #Registration {
-    font-size: 14px;
     text-decoration: underline;
+    font-size: 14px;
     color: #878484;
 }
 #Registration:hover {
     color: #e1e1e1;
+}
+
+#back_button {
+    color: #e1e1e1;
+    font-family: "New Century Schoolbook", Times, serif;
+    letter-spacing: .8px;
+    background: #1f1f1f;
+    border-radius: 15px;
+    border: .5px solid #e1e1e1;
+    transition: all 0.2s cubic-bezier(.17,.67,.83,.67);
+}
+#back_button:hover {
+    background: #e1e1e1;
+    color: #1f1f1f;
 }
 
