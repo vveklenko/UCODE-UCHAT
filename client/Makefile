@@ -1,9 +1,12 @@
 .PHONY: all install uchat clean uninstall reinstall
 
-SRCS := $(wildcard src/*.c)
+dirs := src src/events src/configure
+SRCS := $(foreach dir, $(dirs), $(wildcard $(dir)/*.c))
 HDRS := $(wildcard inc/*.h)
 
-WFLGS := $(addprefix -W, all extra error pedantic)
+WFLGS := $(addprefix -W, all extra error pedantic) \
+	-Wno-unused-command-line-argument -Wno-unused-variable \
+    -Wno-unused-function -Wno-unused-parameter
 GTK_LINK_FLAGS = `pkg-config --cflags  --libs gtk+-3.0`
 GTK_INC_FLAGS = `pkg-config --cflags gtk+-3.0`
 
