@@ -76,7 +76,12 @@ GtkWidget *finish_btn;
 GtkWidget *eye_eventbox;
 GtkWidget *password_eye_box;
 GtkWidget *password_eye_box_reg;
+GtkWidget *eye_eventbox_reg;
 GtkWidget *eye;
+GtkWidget *eye_reg;
+GtkWidget *password_eye_box_confirm;
+GtkWidget *eye_eventbox_confirm;
+GtkWidget *eye_confirm;
 
 void mx_create_registration_menu();
 void registration_label_enter_notify(GtkWidget *widget, GdkEvent *event, GtkWidget *data);
@@ -102,6 +107,8 @@ void data_change_registration_event_2(GtkWidget *widget, GdkEvent *event);
 void authorization_after_registration(GtkWidget *widget);
 void authorization(GtkWidget *widget);
 void eye_pressed();
+void eye_pressed_reg();
+void eye_pressed_confirm();
 //==========================================================================================
 
 

@@ -147,3 +147,50 @@ void eye_pressed() {
         gtk_entry_set_visibility(GTK_ENTRY(password), FALSE);
     }
 }
+
+void eye_pressed_reg() {
+    if (gtk_entry_get_visibility(GTK_ENTRY(password_reg)) == FALSE) {
+        GdkPixbuf *eye_pixbuf = mx_get_pixbuf_with_size("client/img/standard/eye.png", 35, 30);
+        gtk_image_set_from_pixbuf(GTK_IMAGE(eye_reg), eye_pixbuf);
+        g_object_unref(G_OBJECT(eye_pixbuf));
+        gtk_container_add(GTK_CONTAINER(eye_eventbox_reg), eye_reg);
+        gtk_box_pack_start(GTK_BOX(password_eye_box_reg), eye_eventbox_reg, FALSE, FALSE, 0);
+        gtk_widget_set_size_request(GTK_WIDGET(eye_reg), 40, 25);
+        gtk_widget_set_valign(GTK_WIDGET(eye_eventbox_reg), GTK_ALIGN_END);
+        gtk_entry_set_visibility(GTK_ENTRY(password_reg), TRUE);
+    }
+    else {
+        GdkPixbuf *eye_pixbuf = mx_get_pixbuf_with_size("client/img/standard/blind.png", 35, 30);
+        gtk_image_set_from_pixbuf(GTK_IMAGE(eye_reg), eye_pixbuf);
+        g_object_unref(G_OBJECT(eye_pixbuf));
+        gtk_container_add(GTK_CONTAINER(eye_eventbox_reg), eye_reg);
+        gtk_box_pack_start(GTK_BOX(password_eye_box_reg), eye_eventbox_reg, FALSE, FALSE, 0);
+        gtk_widget_set_size_request(GTK_WIDGET(eye_reg), 40, 25);
+        gtk_widget_set_valign(GTK_WIDGET(eye_eventbox_reg), GTK_ALIGN_END);
+        gtk_entry_set_visibility(GTK_ENTRY(password_reg), FALSE);
+    }
+}
+
+void eye_pressed_confirm() {
+    if (gtk_entry_get_visibility(GTK_ENTRY(password_reg_confirm)) == FALSE) {
+        GdkPixbuf *eye_pixbuf = mx_get_pixbuf_with_size("client/img/standard/eye.png", 35, 30);
+        gtk_image_set_from_pixbuf(GTK_IMAGE(eye_confirm), eye_pixbuf);
+        g_object_unref(G_OBJECT(eye_pixbuf));
+        gtk_container_add(GTK_CONTAINER(eye_eventbox_confirm), eye);
+        gtk_box_pack_start(GTK_BOX(password_eye_box_confirm), eye_eventbox_confirm, FALSE, FALSE, 0);
+        gtk_widget_set_size_request(GTK_WIDGET(eye_confirm), 40, 25);
+        gtk_widget_set_valign(GTK_WIDGET(eye_eventbox_confirm), GTK_ALIGN_END);
+        gtk_entry_set_visibility(GTK_ENTRY(password_reg_confirm), TRUE);
+    }
+    else {
+        GdkPixbuf *eye_pixbuf = mx_get_pixbuf_with_size("client/img/standard/blind.png", 35, 30);
+        gtk_image_set_from_pixbuf(GTK_IMAGE(eye_confirm), eye_pixbuf);
+        g_object_unref(G_OBJECT(eye_pixbuf));
+        gtk_container_add(GTK_CONTAINER(eye_eventbox_confirm), eye_confirm);
+        gtk_box_pack_start(GTK_BOX(password_eye_box_confirm), eye_eventbox_confirm, FALSE, FALSE, 0);
+        gtk_widget_set_size_request(GTK_WIDGET(eye_confirm), 40, 25);
+        gtk_widget_set_valign(GTK_WIDGET(eye_eventbox_confirm), GTK_ALIGN_END);
+        gtk_entry_set_visibility(GTK_ENTRY(password_reg_confirm), FALSE);
+    }
+}
+
