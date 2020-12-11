@@ -24,10 +24,10 @@ void mx_change_user_avatar(char path[]) {
     t_user.avatar = mx_get_pixbuf_with_size(path, 100, 100);
 }
 
-void mx_init_user() {
-    t_user.FirstName = NULL;
-    t_user.SecondName = NULL;
-    t_user.pseudonim = NULL;
+void mx_init_user(void) {
+    //t_user.FirstName = NULL;
+    //t_user.SecondName = NULL;
+    //t_user.pseudonim = NULL;
     t_user.description = NULL;
     t_user.avatar = mx_get_pixbuf_with_size("client/img/avatar.jpg", 100, 100);
 }

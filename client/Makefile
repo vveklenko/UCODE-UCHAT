@@ -15,7 +15,7 @@ all: install
 install: uchat
 
 uchat:
-	@clang $(WFLGS) $(GTK_INC_FLAGS) $(SRCS) $(HDRS) $(GTK_LINK_FLAGS)
+	@clang -lsqlite3 -lpthread $(WFLGS) $(GTK_INC_FLAGS) $(SRCS) $(HDRS) $(GTK_LINK_FLAGS)
 	@mv a.out ../$@
 
 clean:
