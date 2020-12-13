@@ -17,13 +17,13 @@ void button_shine(GtkWidget *widget, GdkEvent *event) {
 }
 
 void activate_prelight_with_condition_entry(GtkWidget *widget, GdkEvent *event, gpointer *entry) {
-    if (strlen(gtk_entry_get_text(GTK_ENTRY(entry))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(secondname_reg))) > 0) {
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(entry))) > 0) {
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, FALSE);
     }
 }
 
 void deactivate_prelight_with_condition_entry(GtkWidget *widget, GdkEvent *event, gpointer *entry) {
-    if (strlen(gtk_entry_get_text(GTK_ENTRY(entry))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(secondname_reg))) > 0) {
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(entry))) > 0) {
         gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
     }
 }
@@ -62,7 +62,7 @@ void hide_registration_click(GtkWidget *widget, GdkEvent *event, gpointer *data)
 
 // Events which change opacity of "next" buttons
 //===========================================================================
-void data_change_registration_event(GtkWidget *widget) {
+void data_change_registration_event(GtkWidget *widget, GdkEvent *event) {
     if (strlen(gtk_entry_get_text(GTK_ENTRY(login_reg))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(password_reg))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(password_reg_confirm))) > 0) {
         gtk_widget_set_opacity(GTK_WIDGET(next_btn), 1.0);
     }
@@ -72,7 +72,7 @@ void data_change_registration_event(GtkWidget *widget) {
 }
 
 void data_change_registration_event_2(GtkWidget *widget, gpointer data) {
-    if (strlen(gtk_entry_get_text(GTK_ENTRY(widget))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(secondname_reg))) > 0) {
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(widget))) > 0) {
         gtk_widget_set_opacity(GTK_WIDGET(data), 1.0);
     }
     else {
@@ -106,9 +106,9 @@ void hide_registration_click_2(GtkWidget *widget) {
 }
 
 void authorization_after_registration(GtkWidget *widget, GdkEvent *event, gpointer *data) {
-    if (strlen(gtk_entry_get_text(GTK_ENTRY(data))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(secondname_reg))) > 0) {
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(data))) > 0) {
         gtk_widget_hide(GTK_WIDGET(registration_menu_2));
-        gtk_widget_show_all(GTK_WIDGET(data));
+        gtk_widget_show_all(GTK_WIDGET(log_in_menu));
     }
 }
 

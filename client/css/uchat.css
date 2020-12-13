@@ -1,5 +1,6 @@
 @import url("edit_user_form.css");
 @import url("registration_menu.css");
+@import url("language_form.css");
 
 * {
     font-family: "New Century Schoolbook", Times, serif;
@@ -27,6 +28,11 @@
     0% {opacity: 0;}
     75% {opacity: 0.4;}
     100% {opacity: 1;}
+}
+
+@keyframes gradient {
+    0% {background: linear-gradient(51deg, rgba(225,225,225,0.4) 0%, rgba(31,31,31,0) 33%);}
+    100% {background: linear-gradient(51deg, rgba(31,31,31,0) 74%, rgba(225,225,225,0) 100%);}
 }
 
 #close_image_box {
