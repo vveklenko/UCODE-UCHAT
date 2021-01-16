@@ -5,14 +5,9 @@ void mx_create_edit_user_form(void) {
     // Create a blackout - a dark background behind the form
     //==================================================================================
     blackout = gtk_event_box_new();
-    GtkWidget *edit_user_fixed_container = gtk_fixed_new();
     gtk_widget_set_name(GTK_WIDGET(blackout), "blackout");
-    gtk_widget_set_state_flags(GTK_WIDGET(blackout), GTK_STATE_FLAG_NORMAL, TRUE);
-    g_signal_connect(G_OBJECT(blackout), "button_press_event",
-        G_CALLBACK(blackout_click), NULL);
-    gtk_container_add(GTK_CONTAINER(blackout), edit_user_fixed_container);
     gtk_fixed_put(GTK_FIXED(chat_area), blackout, 0, 0);
-    gtk_widget_set_size_request(GTK_WIDGET(edit_user_fixed_container), CUR_WIDTH, CUR_HEIGHT);
+    gtk_widget_set_size_request(GTK_WIDGET(blackout), CUR_WIDTH, CUR_HEIGHT);
     //==================================================================================
 
     NewFirstName = strdup(t_user.FirstName);
@@ -26,8 +21,11 @@ void mx_create_edit_user_form(void) {
     
     edit_user_form = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_name(GTK_WIDGET(edit_user_form), "edit_user_form");
-    gtk_fixed_put(GTK_FIXED(edit_user_fixed_container), edit_user_form,
-        CUR_WIDTH / 3 - 10, CUR_HEIGHT / 5 - 50);
+    gtk_widget_set_valign(GTK_WIDGET(edit_user_form), GTK_ALIGN_CENTER);
+    gtk_widget_set_halign(GTK_WIDGET(edit_user_form), GTK_ALIGN_CENTER);
+    gtk_container_add(GTK_CONTAINER(blackout), edit_user_form);
+    g_signal_connect(G_OBJECT(blackout), "button_press_event",
+        G_CALLBACK(blackout_destroy), edit_user_form);
 
     edit_user_main_screen = gtk_box_new(GTK_ORIENTATION_VERTICAL, 15);
     gtk_widget_set_size_request(GTK_WIDGET(edit_user_form), 400, 520);
@@ -208,4 +206,8 @@ void mx_create_edit_user_form(void) {
     g_signal_connect(G_OBJECT(commit_btn), "button_press_event",
         G_CALLBACK(commit_edit_user_click_event), NULL);
     //==================================================================================
+
+    gtk_widget_show_all(GTK_WIDGET(blackout));
+    gtk_widget_hide(GTK_WIDGET(edit_username_event_screen));
+    gtk_widget_hide(GTK_WIDGET(edit_pseudonim_event_screen));
 }

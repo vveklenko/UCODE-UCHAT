@@ -4,16 +4,17 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <gtk/gtk.h>
 #include <sys/ioctl.h>
-#include <stdio.h>
-#include <math.h>
-#include <sqlite3.h>
-
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <locale.h>
+#include <stdio.h>
+#include <math.h>
+#include <sqlite3.h>
+
+#include "../../libraries/libmx/inc/libmx.h"
+#include "tools.h"
 
 // Window size
 //==========================================================================================
@@ -33,6 +34,19 @@ gint L_FIELD_WIDTH;
 
 //==========================================================================================
 
+// A message
+//==========================================================================================
+typedef struct s_message
+{
+    GdkPixbuf *image;
+    char *text;
+    int usr_id;
+}              t_message;
+
+GtkWidget *mx_create_message(t_message *data);
+void mx_add_message(GtkWidget *container, t_message *message);
+//==========================================================================================
+
 // Images
 //==========================================================================================
 typedef struct s_img_button
@@ -47,6 +61,7 @@ t_img_button tick_image;
 t_img_button more_image;
 
 t_img_button edit_user_image;
+t_img_button account_settings_image;
 t_img_button change_account_image;
 t_img_button chat_settings_image;
 t_img_button language_image;
@@ -59,11 +74,10 @@ t_img_button *t_active_image;
 void mx_load_images(void);
 //==========================================================================================
 
-
 // Log in/Registration menu
 //==========================================================================================
 GtkWidget *log_in_menu;
-GtkWidget *authorization_fixed_container;
+GtkWidget *authorization_container;
 GtkWidget *registration_menu_1;
 GtkWidget *registration_menu_2;
 GtkWidget *login;
@@ -71,8 +85,11 @@ GtkWidget *password;
 GtkWidget *login_reg;
 GtkWidget *password_reg;
 GtkWidget *password_reg_confirm;
+GtkWidget *firstname_reg;
+GtkWidget *secondname_reg;
 GtkWidget *login_btn;
 GtkWidget *next_btn;
+GtkWidget *fail_auto_inscription;
 
 void mx_create_registration_menu(void);
 
@@ -86,28 +103,60 @@ void login_btn_enter_notify(void);
 void login_btn_leave_notify(void);
 void hide_authorization_click(GtkWidget *widget, GdkEvent *event, gpointer *data);
 void hide_registration_click(GtkWidget *widget, GdkEvent *event, gpointer *data);
-void next_btn_enter_notify(GtkWidget *widget);
-void next_btn_leave_notify(GtkWidget *widget);
+void next_btn_enter_notify(GtkWidget *widget, GdkEvent *event, gpointer *data);
+void next_btn_leave_notify(GtkWidget *widget, GdkEvent *event, gpointer *data);
 void data_change_registration_event(GtkWidget *widget, GdkEvent *event);
-void transition_registration_click(GtkWidget *widget);
-void hide_registration_click_2(GtkWidget *widget);
+void transition_registration_click(GtkWidget *widget, GdkEvent *event, gpointer *data);
+void hide_registration_click_2(GtkWidget *widget, GdkEvent *event, gpointer *data);
 
 void data_change_registration_event_2(GtkWidget *widget, gpointer data);
 void authorization_after_registration(GtkWidget *widget, GdkEvent *event, gpointer *data);
-void authorization(GtkWidget *widget);
+void authorization(GtkWidget *widget, GdkEvent *event, gpointer *data);
 void eye_pressed(GtkWidget *widget, GdkEventButton *event, gpointer data);
 //==========================================================================================
+
+// Account settings menu
+//==========================================================================================
+GtkWidget *account_settings_menu;
+
+GtkWidget *edit_password_change_icon;
+GtkWidget *edit_user_delete_icon;
+
+void mx_create_account_settings_form(void);
+
+void password_change_enter_notify(GtkWidget *widget, GdkEvent *event, GtkWidget *data);
+
+void password_change_leave_notify(GtkWidget *widget, GdkEvent *event, GtkWidget *data);
+
+void password_change_click(GtkWidget *widget, GdkEventButton *event);
+
+void user_delete_enter_notify(GtkWidget *widget, GdkEvent *event, GtkWidget *data); 
+    
+void user_delete_leave_notify(GtkWidget *widget, GdkEvent *event, GtkWidget *data);
+   
+void user_delete_click(GtkWidget *widget, GdkEventButton *event);
+   
+
+
+
+
+//==========================================================================================
+
+
+
 
 
 // User info
 //==========================================================================================
 struct
 {
+    int id;
     char *FirstName;
     char *SecondName;
     char *pseudonim;
     char *description;
     GdkPixbuf *avatar;
+    char *password;
 } t_user;
 
 void mx_change_user_name(char fName[], char sName[]);
@@ -115,6 +164,7 @@ void mx_change_user_pseudonim(char str[]);
 void mx_change_user_description(char str[]);
 void mx_change_user_avatar(char path[]);
 void mx_init_user(void);
+void mx_update_user_data_preview(void);
 //==========================================================================================
 
 
@@ -140,7 +190,6 @@ GdkPixbuf *NewAvatar;
 GtkWidget *edit_username_event_screen;
 GtkWidget *edit_username_eventbox;
 GtkWidget *edit_username_icon;
-
 GtkWidget *change_fname_entry;
 GtkWidget *change_sname_entry;
 
@@ -148,8 +197,8 @@ GtkWidget *change_sname_entry;
 GtkWidget *edit_pseudonim_event_screen;
 GtkWidget *edit_pseudo_eventbox;
 GtkWidget *edit_pseudo_icon;
-
 GtkWidget *change_pseudo_entry;
+
 void mx_create_edit_user_form(void);
 
 void change_avatart_btn_click(GtkWidget *widget, GdkEvent *event);
@@ -182,6 +231,8 @@ void change_description_entry_change_event(GtkWidget *widget);
 void commit_edit_user_click_event(GtkWidget *widget, GdkEventButton *event);
 //==========================================================================================
 
+
+
 // Language
 //==========================================================================================
 GtkWidget *mx_language_create_box(char *path, char *name);
@@ -197,21 +248,20 @@ void mx_init_global_vars(void);
 void mx_configure_main_area(void);
 void mx_configure_left_header(void);
 void mx_configure_content_selection_area(void);
-void mx_configure_message_enter_area(void);
+void mx_create_message_enter_area(void);
 void mx_configure_settings_menu_area(void);
 void mx_configure_username_event_screen(void);
 void mx_configure_pseudonim_event_screen(void);
-GdkPixbuf *mx_create_pixbuf(const gchar *filename);
-GdkPixbuf *mx_get_pixbuf_with_size(char *path, int w, int h);
 void mx_tooltip(char *str, void *data);
 
-// All draw functions are in "mx_draw_functions.c"
+// Draw functions
 //==========================================================================================
 gboolean mx_draw_event_background(GtkWidget *widget, cairo_t *cr, gpointer user_data);
-gboolean mx_draw_event_authorization_fixed_container(GtkWidget *widget, cairo_t *cr);
+gboolean mx_draw_event_authorization_container(GtkWidget *widget, cairo_t *cr);
 gboolean mx_draw_event_message_enter_area(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr);
 gboolean mx_draw_event_image_avatar(GtkWidget *widget, cairo_t *cr, GdkPixbuf **img_data);
+gboolean mx_draw_event_round_image(GtkWidget *widget, cairo_t *cr, GdkPixbuf **img_data);
 //==========================================================================================
 
 // Event callback functions
@@ -224,11 +274,14 @@ void close_image_click_event(GtkWidget *widget, GdkEventButton *event);
 void messages_click(GtkWidget *widget, GdkEventButton *event);
 void contacts_click(GtkWidget *widget, GdkEventButton *event);
 void settings_click(GtkWidget *widget, GdkEventButton *event);
-void entry_chat_fill_event(GtkWidget *widget, GdkEvent *event);
 
 void edit_user_enter_notify(GtkWidget *widget);
 void edit_user_leave_notify(GtkWidget *widget);
 void edit_user_click(GtkWidget *widget, GdkEventButton *event);
+
+void account_settings_enter_notify(GtkWidget *widget);
+void account_settings_leave_notify(GtkWidget *widget);
+void account_settings_click(GtkWidget *widget, GdkEventButton *event);
 
 void change_account_enter_notify(GtkWidget *widget);
 void change_account_leave_notify(GtkWidget *widget);
@@ -241,63 +294,74 @@ void language_enter_notify(GtkWidget *widget);
 void language_leave_notify(GtkWidget *widget);
 void language_click(GtkWidget *widget, GdkEventButton *event);
 
-void blackout_click(GtkWidget *widget, GdkEventButton *event);
-void blackout_click_language(GtkWidget *widget, GdkEventButton *event);
+void blackout_destroy(GtkWidget *widget, GdkEventButton *event, GtkWidget *box);
 //==========================================================================================
-
-char *mx_strnew(const int size);
-char *mx_strjoin(const char *s1, const char *s2);
-char *mx_file_to_str(const char *file);
-char **mx_strsplit(const char *s, char c);
-char *mx_strndup(const char *s1, size_t n);
-int mx_count_words(const char *str, char c);
-char *mx_strncpy(char *dst, const char *src, int len);
-int mx_strlen(const char *s);
-void mx_del_strarr(char ***arr);
-void mx_strdel(char **str);
-void mx_get_language_arr(void);
-bool mx_isupper(int c);
-bool mx_isalpha(int c);
-int mx_strcmp(const char *s1, const char *s2);
 
 GtkWidget *window;                      // a top-level window
 GtkWidget *main_area;                   // an area that contains area with authorization form and chat area
 GtkWidget *authorization_area;
 GtkWidget *chat_area;
 
+GtkWidget *entry_search;
+GtkWidget *messages_box;
+
 GtkWidget *chats_list;                  
 GtkWidget *contacts_list;
 GtkWidget *settings_menu;
 GtkWidget *active_leftbar_container;
+
+GtkWidget *right_container;
 GtkWidget *message_enter_area;
 
 GtkWidget *blackout;
 
-
 int language;
 char **text_for_labels;
-typedef struct s_labels
-{
-    int index;
-    GtkWidget *data;
-    struct s_labels *next;
-} t_labels;
-t_labels *labels_head;
 
-t_labels *mx_create_node(void *data, int index);
-void mx_pop_front(t_labels **head);
-void mx_push_back(t_labels **list, void *data, int index);
+// Chat room
+//==========================================================================================
+GtkWidget *mx_create_room(int id);
+void room_click(GtkWidget *widget, GdkEventButton *event);
+void room_close(GtkWidget *widget, GdkEventKey *event);
+void mx_create_messages_area(void);
+void mx_attach(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry);
+void mx_attach_send_message_on_enter(GtkWidget *widget, char *filename);
+void mx_create_attach_form(GtkWidget *entry, char *filename);
+void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry);
+void mx_send_message_on_enter(GtkWidget *widget);
+void entry_chat_fill_event(GtkWidget *widget, GdkEvent *event);
+//==========================================================================================
 
+
+
+
+
+// DATA BASE
+//==========================================================================================
 //int mx_create_db(const char* s); 
 //int mx_create_table(const char* s);
 void mx_write_to_log(char *msg, int stream);
+
 sqlite3 *mx_opening_db(void);
 void mx_dberror(sqlite3 *db, int status, char *msg);
 void mx_database_init(void);
-void mx_add_user_data(char* name, char* surename, char *pseudo, char *description);
-char *mx_strnew(int size);
+void mx_add_user_data(const char *pseudo, const char *password, const char *name, const char *sname);
+void mx_read_photo_from_bd(int id);
+void mx_write_language_data_from_bd(void);
+void mx_write_photo_to_bd(char *path);
+
+
+
 char *mx_string_copy(char *str);
 void mx_write_user_data_from_bd(void);
-void mx_edit_name(char* name, char* surname, char* pseudo, char *description);
+void mx_edit_name(char* name, char* surname, char* pseudo, char *description, int id);
+void mx_edit_language(int language);
+//void mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* password);
+//==========================================================================================
+
+
+int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* password);
+int mx_check_login_reg(const char *pseudo);
+
 
 #endif

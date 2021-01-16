@@ -1,20 +1,32 @@
-#authorization_fixed_container {
-    background-color: #1f1f1f;
+#authorization_container {
+    background: url("../img/back-registration.png");
+    background-size: 1280px;
+    background-position: -100px;
  }
+
+ #error {
+    font-size: 16px;
+    color: red;
+    margin-top: 20px;
+}
 
  #registration_menu_form {
     padding: 5px;
     background: #1f1f1f;
-    box-shadow: 0px 0px 5px 2px #e1e1e1;
     border-radius: 15px;
-    animation-name: fade;
-    animation-duration: .2s;
+    border: .5px solid #e1e1e1;
 }
 
 #authorization {
     font-size: 24px;
     font-style: italic;
     color: #e1e1e1;
+    margin-top: 20px;
+}
+
+#error {
+    font-size: 16px;
+    color: red;
     margin-top: 20px;
 }
 
@@ -47,7 +59,6 @@
     border-width: 1px;
     transition: all 0.2s;
 }
-
 
 
 #entry_data {
@@ -105,7 +116,7 @@
     background: #1f1f1f;
     border-radius: 15px;
     border: .5px solid #e1e1e1;
-    transition: all 0.2s cubic-bezier(.17,.67,.83,.67);
+    transition: all 0.2s ;
     margin-top: 30px;
     margin-bottom: 5px;
 }
@@ -133,7 +144,7 @@
     background: #1f1f1f;
     border-radius: 15px;
     border: .5px solid #e1e1e1;
-    transition: all 0.2s cubic-bezier(.17,.67,.83,.67);
+    transition: all 0.2s ;
 }
 #back_button:hover {
     background: #e1e1e1;

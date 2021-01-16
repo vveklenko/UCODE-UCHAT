@@ -5,13 +5,12 @@ int main(int argc, char *argv[]) {
     //const char *DBdir = "../data/test.db";
 
     mx_init_global_vars();
-
+    mx_write_language_data_from_bd();
     mx_get_language_arr();
     
     mx_database_init();
     mx_write_user_data_from_bd();
     mx_init_user();
-    
   
     gtk_init(&argc, &argv);
 
@@ -25,31 +24,13 @@ int main(int argc, char *argv[]) {
     // Create a new window
     window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     mx_init_window();
+
     // Create a main area where all widgets will be shown
     mx_configure_main_area();
-    // Create a selection area
-    mx_configure_content_selection_area();
-    // Create a chat enter area
-    mx_configure_message_enter_area();
-
-    // Create a chat list area
-    chats_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_fixed_put(GTK_FIXED(chat_area), chats_list, 0, 95);
-    active_leftbar_container = NULL;
-
-    // Create a contacts list area
-    contacts_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_fixed_put(GTK_FIXED(chat_area), contacts_list, 0, 95);
-
-    // Create a settings menu
-    mx_configure_settings_menu_area();
 
     gtk_widget_show_all (window);
-    // Hide unneccessary widgets
-    gtk_widget_hide(GTK_WIDGET(tick_image.box));
-    gtk_widget_hide(GTK_WIDGET(contacts_list));
-    gtk_widget_hide(GTK_WIDGET(settings_menu));
-    gtk_widget_hide(GTK_WIDGET(message_enter_area));
+    mx_create_registration_menu();
+    gtk_widget_hide(GTK_WIDGET(chat_area));
 
     gtk_main();
 
@@ -60,6 +41,6 @@ int main(int argc, char *argv[]) {
     free(t_user.description);
     mx_del_strarr(&text_for_labels);
     while (labels_head != NULL)
-        mx_pop_front(&labels_head);
+        mx_label_pop_front(&labels_head);
     return 0;
 }

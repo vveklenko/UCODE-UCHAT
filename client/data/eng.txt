@@ -27,4 +27,11 @@ Next
 Your first name*
 Your second name
 Finish
- 
+Select a contact to learn more
+You cannot send an empty message!
+Passwords are not match!
+Incorrect Username or Password!
+This username is already exist!
+Account settings
+Change password
+Delete your account

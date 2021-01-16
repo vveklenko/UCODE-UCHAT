@@ -1,6 +1,8 @@
 @import url("edit_user_form.css");
 @import url("registration_menu.css");
 @import url("language_form.css");
+@import url("chat_area.css");
+@import url("account_settings.css");
 
 * {
     font-family: "New Century Schoolbook", Times, serif;
@@ -35,13 +37,34 @@
     100% {background: linear-gradient(51deg, rgba(31,31,31,0) 74%, rgba(225,225,225,0) 100%);}
 }
 
+#room_title {
+    color: #e1e1e1;
+    font-size: 18px;
+    font-family: "New Century Schoolbook", Times, serif;
+    font-style: italic;
+}
+#room_text_preview {
+    color: #e1e1e1;
+    font-size: 14px;
+    font-family: "New Century Schoolbook", Times, serif;
+}
+
+#eventbox_room:hover {
+    animation-name: gradient;
+    animation-duration: .5s;
+    animation-fill-mode: forwards;
+}
+#room_avatar {
+    background: green;
+}
+
 #close_image_box {
     background-image: url("../img/standard/cancel.png");
     background-size: 25px;
 }
 #close_image_box:hover {
     background-image: url("../img/standard/cancel-hovered.png");
-    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
+    transition: all 0.5s ;
 }
 
 #return_image_box {
@@ -50,7 +73,7 @@
 }
 #return_image_box:hover {
     background-image: url("../img/standard/left-arrow-hovered.png");
-    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
+    transition: all 0.5s ;
 }
 
 
@@ -63,7 +86,7 @@
 }
 #add_image:hover {
     background-image: url("../img/standard/add-hovered.png");
-    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
+    transition: all 0.5s ;
 }
 #add_image:checked {
     background-image: url("../img/standard/add-hovered.png");
@@ -83,7 +106,7 @@
 }
 #tick_image:hover {
     background-image: url("../img/standard/tick-hovered.png");
-    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
+    transition: all 0.5s ;
 }
 
 #more_image {
@@ -93,7 +116,6 @@
 }
 #more_image:hover {
     background-image: url("../img/standard/more-hovered.png");
-    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
 }
 #more_image:checked {
     background-image: url("../img/standard/more-hovered.png");
@@ -106,7 +128,6 @@
 }
 #edit_user_image:hover {
     background-image: url("../img/standard/edit-user-hovered.png");
-    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
 }
 
 #change_account_image {
@@ -116,7 +137,6 @@
 }
 #change_account_image:hover {
     background-image: url("../img/standard/identification-hovered.png");
-    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
 }
 
 #chat_settings_image {
@@ -126,7 +146,6 @@
 }
 #chat_settings_image:hover {
     background-image: url("../img/standard/chat-settings-hovered.png");
-    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
 }
 
 #language_image {
@@ -136,7 +155,6 @@
 }
 #language_image:hover {
     background-image: url("../img/standard/book-hovered.png");
-    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
 }
 
 #messages_image {
@@ -212,18 +230,7 @@
     padding-bottom: 7.5px;
 }
 
-#label_edit_user {
-    font-size: 18px;
-    letter-spacing: 1px;
-}
-
-#label_change_account {
-    font-size: 18px;
-    letter-spacing: 1px;
-    margin-left: -1px;
-}
-
-#label_chat_settings {
+#label_settings_menu {
     font-size: 18px;
     letter-spacing: 1px;
 }
@@ -234,55 +241,19 @@
     padding-left: 56px;
 }
 
-#label_language {
-    font-size: 18px;
-    margin-left: -3px;
-    letter-spacing: 1px;
-}
-
 /* Hovering effects for settings menu items */
 /* ======================================== */
-#edit_user_eventbox {
-    transition: all 0.2s;
-}
-#edit_user_eventbox:hover {
-    border-left: 5px solid #e1e1e1;
-    border-right: 5px solid #e1e1e1;
-}
-#edit_user_eventbox:active {
-    border-left: 5px solid #e1e1e1;
-    border-right: 5px solid #e1e1e1;
-}
-
-#change_account_eventbox {
-    transition: all 0.2s;
-}
-#change_account_eventbox:hover {
-    border-left: 5px solid #e1e1e1;
-    border-right: 5px solid #e1e1e1;
-}
-
-#chat_settings_eventbox {
-    transition: all 0.2s;
-}
-#chat_settings_eventbox:hover {
-    border-left: 5px solid #e1e1e1;
-    border-right: 5px solid #e1e1e1;
-}
-
-#language_eventbox {
-    transition: all 0.2s;
-}
-#language_eventbox:hover {
-    border-left: 5px solid #e1e1e1;
-    border-right: 5px solid #e1e1e1;
+#setting_menu_eventbox:hover {
+    animation-name: gradient;
+    animation-duration: .5s;
+    animation-fill-mode: forwards;
 }
 /* ======================================== */
 
 /*        FOOTER         */
 /* ===================== */
 #label_impulse {
-    margin-top: 195px;
+    margin-top: 135px;
     font-size: 22px;
     font-style: italic;
 }

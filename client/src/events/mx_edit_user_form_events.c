@@ -22,6 +22,9 @@ void change_avatart_btn_click(GtkWidget *widget, GdkEvent *event) {
         char *filename;
         GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
         filename = gtk_file_chooser_get_filename (chooser);
+
+        mx_write_photo_to_bd(filename);
+        
         g_object_unref(G_OBJECT(NewAvatar));
         NewAvatar = mx_get_pixbuf_with_size(filename, 100, 100);
         free(filename);
@@ -214,7 +217,7 @@ void commit_edit_user_click_event(GtkWidget *widget, GdkEventButton *event) {
         mx_change_user_description(NewDescription);
         free(NewDescription);
         NewDescription = NULL;
-        mx_edit_name(t_user.FirstName, t_user.SecondName, t_user.pseudonim, t_user.description);
+        mx_edit_name(t_user.FirstName, t_user.SecondName, t_user.pseudonim, t_user.description, t_user.id);
 
         g_object_unref(G_OBJECT(t_user.avatar));
         t_user.avatar = gdk_pixbuf_copy(GDK_PIXBUF(NewAvatar));
@@ -222,6 +225,7 @@ void commit_edit_user_click_event(GtkWidget *widget, GdkEventButton *event) {
         gtk_widget_queue_draw(GTK_WIDGET(settings_menu));
 
         gtk_widget_destroy(GTK_WIDGET(blackout));
+        blackout = NULL;
     }
 }
 //============================================================================================

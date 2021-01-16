@@ -16,9 +16,27 @@ void edit_user_leave_notify(GtkWidget *widget) {
 void edit_user_click(GtkWidget *widget, GdkEventButton *event) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         mx_create_edit_user_form();
-        gtk_widget_show_all(GTK_WIDGET(blackout));
-        gtk_widget_hide(GTK_WIDGET(edit_username_event_screen));
-        gtk_widget_hide(GTK_WIDGET(edit_pseudonim_event_screen));
+    }
+}
+//=================================================================================
+
+// Account settings icon
+//=================================================================================
+void account_settings_enter_notify(GtkWidget *widget) {
+    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
+    gtk_widget_set_state_flags(GTK_WIDGET(account_settings_image.box), 
+        GTK_STATE_FLAG_PRELIGHT, FALSE);
+}
+
+void account_settings_leave_notify(GtkWidget *widget) {
+    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
+    gtk_widget_unset_state_flags(GTK_WIDGET(account_settings_image.box), 
+        GTK_STATE_FLAG_PRELIGHT);
+}
+
+void account_settings_click(GtkWidget *widget, GdkEventButton *event) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        mx_create_account_settings_form();
     }
 }
 //=================================================================================
@@ -40,10 +58,6 @@ void change_account_leave_notify(GtkWidget *widget) {
 void change_account_click(GtkWidget *widget, GdkEventButton *event) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         mx_create_registration_menu();
-        gtk_widget_show_all(GTK_WIDGET(authorization_area));
-        gtk_widget_hide(GTK_WIDGET(chat_area));
-        gtk_widget_hide(GTK_WIDGET(registration_menu_1));
-        gtk_widget_hide(GTK_WIDGET(registration_menu_2));
     }
 }
 //=================================================================================

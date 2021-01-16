@@ -7,8 +7,11 @@ void mx_init_global_vars(void) {
     authorization_area = NULL;
     chat_area = NULL;
     message_enter_area = NULL;
+    right_container = NULL;
     chats_list = NULL;
     settings_menu = NULL;
+    blackout = NULL;
+    labels_head = NULL;
 
     // Temporary variables for edit user form
     NewFirstName = NULL;
@@ -17,6 +20,6 @@ void mx_init_global_vars(void) {
     NewDescription = NULL;
     NewAvatar = NULL;
 
-    language = 0;
+    //language = 0;
     text_for_labels = NULL;
 }
