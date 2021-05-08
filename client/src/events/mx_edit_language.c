@@ -1,19 +1,34 @@
 #include "../../inc/uchat_client.h"
 
 void mx_edit_language(int language) {
-    sqlite3 *db = mx_opening_db();
-    sqlite3_stmt *res;
-    char sql[500];
-    bzero(sql, 500);
-    int st;
-    char *errmsg;
-    sprintf(sql, "SELECT LANGUAGE FROM LANGUAGE;");
-    int edit_language;
-    sqlite3_prepare_v2(db, sql, -1, &res, 0);
-    sqlite3_step(res);
-    edit_language = (int)sqlite3_column_int(res, 0);
-    sqlite3_finalize(res);
-    sprintf(sql, "UPDATE LANGUAGE SET LANGUAGE = REPLACE(LANGUAGE, '%d' ,'%d');", edit_language, language);   
-    st = sqlite3_exec(db, sql, NULL, 0, &errmsg);
-    mx_dberror(db, st, errmsg); 
+    if (sockfd == -1){
+        mx_connect_to_server(&sockfd);
+        //return 1;
+    }
+    
+    char sendBuff[256];
+    bzero(sendBuff, 256);
+    sprintf(sendBuff, "UpdateLanguage\n%d\n%d", language, t_user.id);
+
+    int error = 0;
+    socklen_t len = sizeof (error);
+    int retval = getsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &error, &len);
+    if (retval != 0) {
+        fprintf(stderr, "error getting socket error code: %s\n", strerror(retval));
+        sockfd = -1;
+        return;
+    }
+    if (error != 0) {
+        fprintf(stderr, "socket error: %s\n", strerror(error));
+        sockfd = -1;
+         return;
+    }
+
+    if(send(sockfd, sendBuff, 256, 0) == -1) {
+        pthread_t thread_id;
+        char *err_msg = "Connection lost\nTry again later";
+        pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+        sockfd = -1;
+        return;
+    }
 }

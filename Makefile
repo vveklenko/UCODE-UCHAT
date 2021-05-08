@@ -3,12 +3,13 @@
 all: install
 
 install:
-	@make -C libraries/libmx
-	@make -C client/
+	@$(MAKE) -C libraries/libmx
+	@$(MAKE) -C client/
+	@$(MAKE) -C server/
 
 uninstall:
-	@make -C client/ uninstall
-
-	@make -C libraries/libmx uninstall
+	@$(MAKE) -C server/ uninstall
+	@$(MAKE) -C client/ uninstall
+	@$(MAKE) -C libraries/libmx uninstall
 
 reinstall: uninstall install
